@@ -15,8 +15,7 @@ def about(request):
 def contact(request):
     if request.method == 'POST':
         form=ContactUsForm(request.POST)
-        if form.is_valid():
-            form.save()
+        form.save()
     form=ContactUsForm()
     return render(request,'blog/contact.html', {'form':form})
 
