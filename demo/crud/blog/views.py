@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib import messages
-from .forms import SigUpForm, LoginForm, PostForm
+from .forms import SigUpForm, LoginForm, PostForm, ContactUsForm
 from .models import Post
 # Create your views here.
 def home(request):
@@ -13,7 +13,12 @@ def about(request):
     return render(request,'blog/about.html')
 
 def contact(request):
-    return render(request,'blog/contact.html')
+    if request.method == 'POST':
+        form=ContactUsForm(request.POST)
+        if form.is_valid():
+            form.save()
+    form=ContactUsForm()
+    return render(request,'blog/contact.html', {'form':form})
 
 def dashboard(request):
     if request.user.is_authenticated:

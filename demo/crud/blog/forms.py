@@ -1,9 +1,8 @@
 from django import forms
-from django.contrib.auth import models
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
 from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
-from blog.models import Post
+from blog.models import Post, ContactUs
 
 
 class SigUpForm(UserCreationForm):
@@ -34,4 +33,11 @@ class PostForm(forms.ModelForm):
         model = Post
         fields = ['title', 'desc']
         labels = {'title': 'Title','desc':'Description'}
+        widget=forms.Textarea(attrs={'class': 'form-control'},)
+
+class ContactUsForm(forms.ModelForm):
+    class Meta:
+        model = ContactUs
+        fields = ['name','email','address','message']
+        labels = {'name':"Name",'email':"Email",'address':"Address",'message':'Message'}
         widget=forms.Textarea(attrs={'class': 'form-control'},)
